@@ -4,11 +4,14 @@ This simmple bash command outputs a list of all directoris and files present in 
 
 
 There is known issues for mac users as they might not have the -h option for the sort or the ls command.
-#### ⚠️ Warning: This command will refill any file called "dsize" with directory size information.
 
-To install you just run this command:
+To install you just append the following code to your ~/.bashrc file:
 ```
-echo "alias dsize='du -h -d 1 > dsize && ls -s -h | sed 1d >> dsize && cat dsize | sort -r -h -o dsize dsize && cat dsize'" >> ~/.bashrc
+dsize() {
+	dsize_temp=$(mktemp)
+	du -h -d 1 > $dsize_temp && ls -s -h | sed 1d >> $dsize_temp && cat $dsize_temp | sort -r -h -o $dsize_temp $dsize_temp && cat $dsize_temp
+	rm $dsize_temp
+}
 ```
 
 To use it you can just type "dsize" into your command line. :)
